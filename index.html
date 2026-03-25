@@ -53,7 +53,7 @@
             width: 450px; opacity: 0.4;
             animation: spin 25s linear infinite;
             z-index: 0; pointer-events: none;
-            transition: transform 0.1s ease-out; /* Để giật mượt hơn */
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Giật nảy hơn */
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
@@ -61,21 +61,22 @@
         .note {
             position: fixed; color: #7fc8f8;
             pointer-events: none; z-index: 1;
+            font-weight: bold;
         }
         .fall-animation { animation: floatDown linear forwards; }
         .click-animation { animation: floatClick 1.5s ease-out forwards; }
 
         @keyframes floatDown {
             0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-            15% { opacity: 0.7; }
-            85% { opacity: 0.7; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
         @keyframes floatClick {
             0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            20% { opacity: 1; transform: translate(-50%, -80%) scale(1.3); }
-            100% { transform: translate(-50%, -200px) rotate(45deg) scale(0.8); opacity: 0; }
+            20% { opacity: 1; transform: translate(-50%, -80%) scale(1.4); }
+            100% { transform: translate(-50%, -250px) rotate(120deg) scale(0.6); opacity: 0; }
         }
 
         .sparkle {
@@ -84,13 +85,12 @@
             pointer-events: none; animation: fade 1s linear forwards;
             z-index: 9999;
         }
-        @keyframes fade { to {opacity: 0; transform: scale(2);} }
+        @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
     </style>
 </head>
 <body>
 
 <img src="tải xuống (21).jpg" class="avatar">
-
 <h1>hi, i'm diem ✨</h1>
 <p>just a second-year student figuring things out… but in a cute way 🌷</p>
 
@@ -149,31 +149,27 @@
     const vinyl = document.getElementById("vinylDisk");
     const notesList = ["🎵", "🎶", "🎼", "♩", "♪", "♫", "♬"];
 
-    // 1. Sparkle di chuột
+    // 1. Sparkle di chuột (nhanh & nhẹ)
     document.addEventListener("mousemove", (e) => {
         let sparkle = document.createElement("div");
         sparkle.className = "sparkle";
         sparkle.style.left = e.clientX + "px";
         sparkle.style.top = e.clientY + "px";
         document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1000);
+        setTimeout(() => sparkle.remove(), 800);
     });
 
-    // 2. Click: Nhạc + Nốt nhạc + Bật chế độ giật cho đĩa
-    let isPlaying = false;
+    // 2. Click: Nhạc + Hiện nốt nhạc
     document.addEventListener("click", (e) => {
-        if (!isPlaying) {
-            music.play().catch(() => {});
-            isPlaying = true;
-            pulseVinyl(); // Bắt đầu chuỗi giật random
-        }
+        music.play().catch(() => {});
         createNote(e.clientX, e.clientY, true);
     });
 
-    // 3. Hàm tạo nốt nhạc
+    // 3. Hàm tạo nốt nhạc (Rơi & Click)
     function createNote(x = null, y = null, isClick = false) {
         const note = document.createElement("div");
-        const size = isClick ? Math.random() * 20 + 45 : Math.random() * 20 + 30;
+        // Click thì nốt siêu to (50-70px), Rơi thì to vừa (30-50px)
+        const size = isClick ? Math.random() * 20 + 50 : Math.random() * 20 + 30;
         
         note.className = "note " + (isClick ? "click-animation" : "fall-animation");
         note.innerHTML = notesList[Math.floor(Math.random() * notesList.length)];
@@ -185,34 +181,38 @@
         } else {
             note.style.left = Math.random() * 100 + "vw";
             note.style.top = "-60px";
-            note.style.animationDuration = (Math.random() * 5 + 7) + "s";
-            note.style.opacity = Math.random() * 0.4 + 0.3;
+            note.style.animationDuration = (Math.random() * 4 + 6) + "s"; // Rơi nhanh hơn tí
+            note.style.opacity = Math.random() * 0.5 + 0.3;
         }
 
         document.body.appendChild(note);
-        setTimeout(() => note.remove(), isClick ? 1500 : 12000);
+        setTimeout(() => note.remove(), isClick ? 1500 : 10000);
     }
 
-    // 4. Giật đĩa than RANDOM (như nhịp bass thật)
+    // 4. Giật đĩa than RANDOM (Bass Boost)
+    // Tách riêng hẳn ra để nó chạy liên tục không phụ thuộc click nốt nhạc
     function pulseVinyl() {
-        if (!isPlaying) return;
+        if (!music.paused) {
+            // Giật cực mạnh ngẫu nhiên
+            const randomScale = 1 + (Math.random() * 0.15); 
+            vinyl.style.transform = `scale(${randomScale})`;
+            
+            // Trả về bình thường nhanh chóng
+            setTimeout(() => {
+                vinyl.style.transform = `scale(1)`;
+            }, 70);
+        }
         
-        // Tạo độ scale ngẫu nhiên từ 1.0 đến 1.12
-        const randomScale = 1 + Math.random() * 0.12;
-        vinyl.style.transform = `scale(${randomScale})`;
-
-        // Sau 100ms thì thu nhỏ lại
-        setTimeout(() => {
-            vinyl.style.transform = `scale(1)`;
-        }, 100);
-
-        // Khoảng cách giữa các lần giật cũng ngẫu nhiên (từ 300ms đến 800ms)
-        const nextPulse = Math.random() * 500 + 300;
+        // Nhịp giật biến thiên (nhanh chậm khác nhau cho phiêu)
+        const nextPulse = Math.random() * 400 + 200; 
         setTimeout(pulseVinyl, nextPulse);
     }
+    
+    // Khởi động vòng lặp giật (nhưng chỉ giật khi nhạc đã play)
+    pulseVinyl();
 
-    // Rơi nốt nhạc tự động (1.5 giây một nốt cho thưa)
-    setInterval(() => createNote(), 1500);
+    // 5. Rơi nốt nhạc tự động (Tần suất dày hơn: 0.8 giây/nốt)
+    setInterval(() => createNote(), 800);
 </script>
 </body>
 </html>
