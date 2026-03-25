@@ -6,26 +6,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
     <style>
-        .note {
-    position: fixed;
-    font-size: 24px;
-    color: #7fc8f8;
-    animation: float 8s linear infinite;
-    opacity: 0.8;
-    z-index: 1;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-    20% { opacity: 1; }
-    100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
-}
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(to bottom, #eef7fb, #d6ecf8);
@@ -37,19 +17,6 @@
 
         h1 { color: #4fa3d1; }
         h2 { color: #7fc8f8; }
-        
-
-@keyframes float {
-    from {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-    20% {opacity: 1;}
-    to {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
-}
 
         .box {
             background: white;
@@ -60,13 +27,14 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
             transition: 0.3s;
             max-width: 700px;
-}
+            position: relative;
+            z-index: 10; /* luôn nổi trên đĩa */
+        }
 
         .box:hover {
             transform: translateY(-8px);
         }
 
-        /* avatar */
         .avatar {
             width: 130px;
             height: 130px;
@@ -75,14 +43,13 @@
             border: 4px solid #d6ecf8;
         }
 
-        /* ảnh section */
         .section-img {
-    width: 80%;  /* nhỏ lại */
-    max-height: 180px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin-bottom: 15px;
-}
+            width: 80%;
+            max-height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
 
         /* skills pill */
         .skills {
@@ -105,22 +72,45 @@
             transform: scale(1.1);
         }
 
-        /* đĩa than */
-.vinyl {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 220px;
-    opacity: 0.9;
-    animation: spin 15s linear infinite;
-    z-index: 999;
-}
+        /* 🎧 đĩa than BIG + dưới layer */
         @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
-        /* sparkle cursor */
+        .vinyl {
+            position: fixed;
+            bottom: -50px;
+            right: -50px;
+            width: 400px; /* TO HƠN */
+            opacity: 0.5;
+            animation: spin 20s linear infinite;
+            z-index: 0; /* nằm dưới text */
+        }
+
+        /* 🎵 nốt nhạc */
+        .note {
+            position: fixed;
+            font-size: 28px;
+            color: #7fc8f8;
+            animation: float 10s linear infinite;
+            opacity: 0.9;
+            z-index: 5;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            20% { opacity: 1; }
+            100% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        /* sparkle */
         .sparkle {
             position: fixed;
             width: 8px;
@@ -140,13 +130,11 @@
 
 <body>
 
-<!-- avatar -->
 <img src="tải xuống (21).jpg" class="avatar">
 
 <h1>hi, i'm diem ✨</h1>
 <p>just a second-year student figuring things out… but in a cute way 🌷</p>
 
-<!-- ABOUT -->
 <div class="box">
     <img src="https://i.imgur.com/2DhmtJ4.jpg" class="section-img">
     <h2>about me</h2>
@@ -155,7 +143,6 @@
     <p>I enjoy creating things and romanticizing my daily life ✨</p>
 </div>
 
-<!-- SKILLS -->
 <div class="box">
     <img src="https://i.imgur.com/Yk6Y5bR.jpg" class="section-img">
     <h2>skills</h2>
@@ -169,7 +156,6 @@
     </div>
 </div>
 
-<!-- EXPERIENCE -->
 <div class="box">
     <img src="https://i.imgur.com/6Iej2c3.jpg" class="section-img">
     <h2>experience</h2>
@@ -178,16 +164,14 @@
     <p>Organizing student events</p>
 </div>
 
-<!-- INTERESTS -->
 <div class="box">
     <img src="https://i.imgur.com/n8OYCzR.jpg" class="section-img">
     <h2>interests</h2>
     <p>Baking 🍰 (future bakery owner)</p>
-    <p>Music: PLAVE, Måneskin, Xdinary Heroes, The Flob, MCR 🎸</p>
+    <p>Music: PLAVE, Måneskin, Xdinary Heroes, MCR 🎸</p>
     <p>Drawing & movies 🎬</p>
 </div>
 
-<!-- CONTACT -->
 <div class="box">
     <img src="https://i.imgur.com/JQ9Z1Zm.jpg" class="section-img">
     <h2>contact</h2>
@@ -195,12 +179,12 @@
     <p>Instagram: ...</p>
 </div>
 
-<!-- NHẠC -->
-<audio autoplay loop>
-    <source src="Crush (크러쉬) - '미워 (Ego)' MV.mp3" type="audio/mpeg">
+<!-- 🎧 NHẠC (QUAN TRỌNG: đổi tên file KHÔNG DẤU) -->
+<audio autoplay loop controls>
+    <source src="ego.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ĐĨA THAN -->
+<!-- 💿 -->
 <img src="suki chan hai.jpg" class="vinyl">
 
 <script>
@@ -210,15 +194,16 @@ document.addEventListener("mousemove", function(e) {
     sparkle.style.left = e.pageX + "px";
     sparkle.style.top = e.pageY + "px";
     document.body.appendChild(sparkle);
-
     setTimeout(() => sparkle.remove(), 1000);
 });
 </script>
 
+<!-- 🎵 NỐT NHẠC -->
 <div class="note" style="left: 5%;">🎵</div>
-<div class="note" style="left: 15%; animation-delay: 2s;">🎶</div>
+<div class="note" style="left: 20%; animation-delay: 2s;">🎶</div>
 <div class="note" style="left: 80%; animation-delay: 1s;">🎵</div>
 <div class="note" style="left: 90%; animation-delay: 3s;">🎶</div>
 <div class="note" style="left: 50%; animation-delay: 4s;">🎵</div>
+
 </body>
 </html>
