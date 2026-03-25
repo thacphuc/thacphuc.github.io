@@ -196,7 +196,7 @@
     function beatPulse() {
         if (!music.paused) {
             // Giật ngẫu nhiên từ 1.05 đến 1.18
-            const scale = 1 + (Math.random() * 0.05);
+            const scale = 1 + (Math.random() * 0.03);
             container.style.transform = `scale(${scale})`;
             
             setTimeout(() => {
