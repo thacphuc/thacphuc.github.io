@@ -17,6 +17,25 @@
 
         h1 { color: #4fa3d1; }
         h2 { color: #7fc8f8; }
+        .note {
+    position: fixed;
+    font-size: 20px;
+    color: #7fc8f8;
+    animation: float 6s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    20% {opacity: 1;}
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
 
         .box {
             background: white;
@@ -26,7 +45,8 @@
             border-radius: 20px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
             transition: 0.3s;
-        }
+            max-width: 700px;
+}
 
         .box:hover {
             transform: translateY(-8px);
@@ -43,10 +63,12 @@
 
         /* ảnh section */
         .section-img {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
+    width: 80%;  /* nhỏ lại */
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
 
         /* skills pill */
         .skills {
@@ -71,11 +93,13 @@
 
         /* đĩa than */
         .vinyl {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            animation: spin 4s linear infinite;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 250px; /* to hơn */
+    opacity: 0.9;
+    animation: spin 12s linear infinite; /* quay chậm */
+}
         }
 
         @keyframes spin {
@@ -178,5 +202,9 @@ document.addEventListener("mousemove", function(e) {
 });
 </script>
 
+    <div class="note" style="left: 10%;">🎵</div>
+<div class="note" style="left: 25%; animation-delay: 2s;">🎶</div>
+<div class="note" style="left: 75%; animation-delay: 1s;">🎵</div>
+<div class="note" style="left: 90%; animation-delay: 3s;">🎶</div>
 </body>
 </html>
