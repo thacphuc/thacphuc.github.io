@@ -91,12 +91,14 @@
         /* 🎵 nốt nhạc */
 .note {
     position: fixed;
-    top: -50px; /* Xuất phát từ trên cùng */
+    top: -60px; /* Xuất phát cao hơn một chút vì nốt to hơn */
     color: #7fc8f8; /* Màu xanh tone của bạn */
     pointer-events: none;
     z-index: 1; /* Để ẩn sau các thẻ .box cho tinh tế */
     animation: floatDown linear forwards;
-    filter: drop-shadow(0 0 5px rgba(127, 200, 248, 0.5));
+    /* Giúp nốt nhạc sắc nét khi phóng to */
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 @keyframes floatDown {
@@ -216,38 +218,54 @@ document.addEventListener("click", function() {
     music.play();
 }, { once: true });
 
-/* 🎵 tạo nốt nhạc bay rơi random */
-function createNote() {
-    const notes = ["🎵", "🎶", "🎼", "♩", "♪"];
+/* list các ký tự nốt nhạc */
+const notesList = ["🎵", "🎶", "🎼", "♩", "♪", "♫", "♬"];
+
+/* 🎵 hàm tạo nốt nhạc bay rơi random */
+function createNote(xPos = null, yPos = null, isClick = false) {
     const note = document.createElement("div");
     note.className = "note";
-    note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+    note.innerHTML = notesList[Math.floor(Math.random() * notesList.length)];
 
-    // Random vị trí ngang (0 - 100%)
-    const startPos = Math.random() * window.innerWidth;
-    note.style.left = startPos + "px";
+    // --- 1. XỬ LÝ VỊ TRÍ ---
+    if (isClick && xPos !== null && yPos !== null) {
+        // Nếu là click, hiện ngay tại con chuột
+        note.style.left = xPos - (parseInt(note.style.fontSize) / 2) + "px"; // Căn giữa nốt
+        note.style.top = yPos - (parseInt(note.style.fontSize) / 2) + "px"; // Căn giữa nốt
+        // Reset animation vì nó không rơi từ top: -60px
+        note.style.animation = "none";
+        // Tạo animation riêng cho nốt được click (ví dụ: bay lên một chút rồi ẩn)
+        note.style.animation = "floatClick 2s ease-out forwards";
+    } else {
+        // Nếu tự động, rơi từ trên xuống
+        const startPos = Math.random() * window.innerWidth;
+        note.style.left = startPos + "px";
+        note.style.top = "-60px"; // Vị trí xuất phát mặc định
+    }
 
-    // Random kích thước (từ 15px đến 35px)
-    const size = Math.random() * 20 + 15;
+    // --- 2. XỬ LÝ KÍCH THƯỚC (TO HƠN) ---
+    // Tăng kích thước ngẫu nhiên (từ 25px đến 55px)
+    const size = Math.random() * 30 + 25;
     note.style.fontSize = size + "px";
 
-    // Random thời gian rơi (từ 5s đến 10s) để nốt nhanh nốt chậm
-    const duration = Math.random() * 5 + 5;
-    note.style.animationDuration = duration + "s";
+    // --- 3. XỬ LÝ THỜI GIAN & ĐỘ MỜ ---
+    // Random thời gian rơi (từ 6s đến 12s) để thưa hơn
+    const duration = Math.random() * 6 + 6;
+    if (!isClick) note.style.animationDuration = duration + "s";
 
-    // Thêm một chút độ mờ ngẫu nhiên
-    note.style.opacity = Math.random() * 0.5 + 0.3;
+    note.style.opacity = Math.random() * 0.5 + 0.4; // Tăng độ mờ một chút cho rõ
 
     document.body.appendChild(note);
 
-    // Xóa nốt nhạc sau khi rơi xong để tránh nặng máy
+    // Xóa nốt nhạc sau khi rơi/bay xong
     setTimeout(() => {
         note.remove();
-    }, duration * 1000);
+    }, isClick ? 2000 : duration * 1000); // 2s cho nốt click, duration cho nốt rơi
 }
 
-// Tạo nốt nhạc thường xuyên hơn một chút
-setInterval(createNote, 400);
+// --- 4. TẠO NỐT RƠI TỰ ĐỘNG (THƯA HƠN) ---
+// Tăng thời gian delay (ví dụ: 800ms thay vì 400ms)
+setInterval(() => createNote(null, null, false), 800);
 </script>
 </body>
 </html>
