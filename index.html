@@ -2,16 +2,37 @@
 <html>
 <head>
     <title>Diem Portfolio</title>
+
+    <!-- font xinh -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #eef7fb;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #eef7fb, #d6ecf8);
             text-align: center;
             padding: 40px;
+            margin: 0;
+            animation: fadeIn 1.5s ease;
         }
+
         h1 {
-            color: #5aa9e6;
+            color: #4fa3d1;
+            margin-bottom: 10px;
         }
+
+        p.subtitle {
+            color: #6faed9;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .box {
             background: white;
             padding: 25px;
@@ -19,17 +40,33 @@
             width: 60%;
             border-radius: 20px;
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        .box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
         h2 {
             color: #7fc8f8;
         }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
     </style>
 </head>
 
 <body>
 
+<!-- avatar -->
+<img src="https://i.pinimg.com/736x/6d/0e/f4/6d0ef4cce5d3cb4db82c5c1c90c3d5b4.jpg" class="avatar">
+
 <h1>hi, i'm diem ✨</h1>
-<p>just a second-year student figuring things out… but in a cute way 🌷</p>
+<p class="subtitle">just a second-year student figuring things out… but in a cute way 🌷</p>
 
 <div class="box">
     <h2>about me</h2>
@@ -40,25 +77,21 @@
 
 <div class="box">
     <h2>skills</h2>
-    <p>Presentation</p>
-    <p>Canva</p>
-    <p>Microsoft Word, Excel</p>
-    <p>Basic SQL</p>
+    <p>Presentation • Canva • Word • Excel • Basic SQL</p>
 </div>
 
 <div class="box">
     <h2>experience</h2>
-    <p>Member of Event Department – Art Club</p>
-    <p>Participated in academic group research projects</p>
-    <p>Involved in organizing small-scale student events</p>
+    <p>Event Department – Art Club</p>
+    <p>Group academic research projects</p>
+    <p>Organizing student events</p>
 </div>
 
 <div class="box">
     <h2>interests</h2>
-    <p>Baking (dreaming of opening my own bakery one day 🍰)</p>
-    <p>Music lover – from soft vibes to rock 🎸</p>
-    <p>Into PLAVE, Måneskin, Xdinary Heroes, The Vamps, My Chemical Romance</p>
-    <p>Drawing & watching movies 🎬</p>
+    <p>Baking (dream bakery owner someday 🍰)</p>
+    <p>Music lover – PLAVE, Måneskin, Xdinary Heroes, The Vamps, MCR 🎸</p>
+    <p>Drawing & movies 🎬</p>
 </div>
 
 <div class="box">
