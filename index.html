@@ -26,7 +26,6 @@
             transition: 0.4s; max-width: 700px;
             position: relative; z-index: 10;
         }
-
         .box:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(79, 163, 209, 0.2); }
 
         .avatar {
@@ -47,21 +46,24 @@
         }
         .skill:hover { background: #7fc8f8; transform: scale(1.1); color: white; }
 
-        /* 💿 Đĩa than xoay */
-        .vinyl {
+        /* 💿 CONTAINER ĐĨA THAN (Dùng để GIẬT) */
+        #vinyl-container {
             position: fixed; bottom: -80px; right: -80px;
+            z-index: 0; pointer-events: none;
+            transition: transform 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* 💿 ẢNH ĐĨA THAN (Dùng để XOAY) */
+        .vinyl-img {
             width: 450px; opacity: 0.4;
             animation: spin 25s linear infinite;
-            z-index: 0; pointer-events: none;
-            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Giật nảy hơn */
         }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 🎵 Nốt nhạc */
+        /* 🎵 NỐT NHẠC */
         .note {
             position: fixed; color: #7fc8f8;
             pointer-events: none; z-index: 1;
-            font-weight: bold;
         }
         .fall-animation { animation: floatDown linear forwards; }
         .click-animation { animation: floatClick 1.5s ease-out forwards; }
@@ -75,8 +77,8 @@
 
         @keyframes floatClick {
             0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            20% { opacity: 1; transform: translate(-50%, -80%) scale(1.4); }
-            100% { transform: translate(-50%, -250px) rotate(120deg) scale(0.6); opacity: 0; }
+            20% { opacity: 1; transform: translate(-50%, -80%) scale(1.5); }
+            100% { transform: translate(-50%, -250px) rotate(120deg) scale(0.7); opacity: 0; }
         }
 
         .sparkle {
@@ -142,14 +144,16 @@
     <source src="https://files.catbox.moe/af2dx6.mp3" type="audio/mpeg">
 </audio>
 
-<img src="suki chan hai.jpg" id="vinylDisk" class="vinyl">
+<div id="vinyl-container">
+    <img src="suki chan hai.jpg" class="vinyl-img">
+</div>
 
 <script>
     const music = document.getElementById("music");
-    const vinyl = document.getElementById("vinylDisk");
+    const container = document.getElementById("vinyl-container");
     const notesList = ["🎵", "🎶", "🎼", "♩", "♪", "♫", "♬"];
 
-    // 1. Sparkle di chuột (nhanh & nhẹ)
+    // 1. Sparkle di chuột
     document.addEventListener("mousemove", (e) => {
         let sparkle = document.createElement("div");
         sparkle.className = "sparkle";
@@ -159,17 +163,16 @@
         setTimeout(() => sparkle.remove(), 800);
     });
 
-    // 2. Click: Nhạc + Hiện nốt nhạc
+    // 2. Click: Phát nhạc + Hiện nốt nhạc
     document.addEventListener("click", (e) => {
         music.play().catch(() => {});
         createNote(e.clientX, e.clientY, true);
     });
 
-    // 3. Hàm tạo nốt nhạc (Rơi & Click)
+    // 3. Hàm tạo nốt nhạc
     function createNote(x = null, y = null, isClick = false) {
         const note = document.createElement("div");
-        // Click thì nốt siêu to (50-70px), Rơi thì to vừa (30-50px)
-        const size = isClick ? Math.random() * 20 + 50 : Math.random() * 20 + 30;
+        const size = isClick ? Math.random() * 20 + 55 : Math.random() * 20 + 35;
         
         note.className = "note " + (isClick ? "click-animation" : "fall-animation");
         note.innerHTML = notesList[Math.floor(Math.random() * notesList.length)];
@@ -181,7 +184,7 @@
         } else {
             note.style.left = Math.random() * 100 + "vw";
             note.style.top = "-60px";
-            note.style.animationDuration = (Math.random() * 4 + 6) + "s"; // Rơi nhanh hơn tí
+            note.style.animationDuration = (Math.random() * 3 + 6) + "s";
             note.style.opacity = Math.random() * 0.5 + 0.3;
         }
 
@@ -189,30 +192,24 @@
         setTimeout(() => note.remove(), isClick ? 1500 : 10000);
     }
 
-    // 4. Giật đĩa than RANDOM (Bass Boost)
-    // Tách riêng hẳn ra để nó chạy liên tục không phụ thuộc click nốt nhạc
-    function pulseVinyl() {
+    // 4. HÀM GIẬT ĐĨA THAN (BEAT PULSE) - Chạy liên tục
+    function beatPulse() {
         if (!music.paused) {
-            // Giật cực mạnh ngẫu nhiên
-            const randomScale = 1 + (Math.random() * 0.15); 
-            vinyl.style.transform = `scale(${randomScale})`;
+            // Giật ngẫu nhiên từ 1.05 đến 1.18
+            const scale = 1 + (Math.random() * 0.13);
+            container.style.transform = `scale(${scale})`;
             
-            // Trả về bình thường nhanh chóng
             setTimeout(() => {
-                vinyl.style.transform = `scale(1)`;
-            }, 70);
+                container.style.transform = `scale(1)`;
+            }, 60);
         }
-        
-        // Nhịp giật biến thiên (nhanh chậm khác nhau cho phiêu)
-        const nextPulse = Math.random() * 400 + 200; 
-        setTimeout(pulseVinyl, nextPulse);
+        // Nhịp giật ngẫu nhiên cực nhạy
+        setTimeout(beatPulse, Math.random() * 400 + 200);
     }
-    
-    // Khởi động vòng lặp giật (nhưng chỉ giật khi nhạc đã play)
-    pulseVinyl();
+    beatPulse();
 
-    // 5. Rơi nốt nhạc tự động (Tần suất dày hơn: 0.8 giây/nốt)
-    setInterval(() => createNote(), 800);
+    // 5. Rơi nốt nhạc (600ms/nốt - bản fix 2)
+    setInterval(() => createNote(), 600);
 </script>
 </body>
 </html>
