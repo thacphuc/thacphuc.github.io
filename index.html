@@ -6,6 +6,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 
     <style>
+        .note {
+    position: fixed;
+    font-size: 24px;
+    color: #7fc8f8;
+    animation: float 8s linear infinite;
+    opacity: 0.8;
+    z-index: 1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(to bottom, #eef7fb, #d6ecf8);
@@ -17,13 +37,7 @@
 
         h1 { color: #4fa3d1; }
         h2 { color: #7fc8f8; }
-        .note {
-    position: fixed;
-    font-size: 20px;
-    color: #7fc8f8;
-    animation: float 6s linear infinite;
-    opacity: 0.7;
-}
+        
 
 @keyframes float {
     from {
@@ -92,20 +106,19 @@
         }
 
         /* đĩa than */
-        .vinyl {
+.vinyl {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 250px; /* to hơn */
+    bottom: 20px;
+    right: 20px;
+    width: 220px;
     opacity: 0.9;
-    animation: spin 12s linear infinite; /* quay chậm */
+    animation: spin 15s linear infinite;
+    z-index: 999;
 }
-        }
-
         @keyframes spin {
-            from {transform: rotate(0);}
-            to {transform: rotate(360deg);}
-        }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
         /* sparkle cursor */
         .sparkle {
@@ -188,7 +201,7 @@
 </audio>
 
 <!-- ĐĨA THAN -->
-<img src="https://i.imgur.com/6X4QK9p.png" class="vinyl">
+<img src="suki chan hai.jpg" class="vinyl">
 
 <script>
 document.addEventListener("mousemove", function(e) {
@@ -202,9 +215,10 @@ document.addEventListener("mousemove", function(e) {
 });
 </script>
 
-    <div class="note" style="left: 10%;">🎵</div>
-<div class="note" style="left: 25%; animation-delay: 2s;">🎶</div>
-<div class="note" style="left: 75%; animation-delay: 1s;">🎵</div>
+<div class="note" style="left: 5%;">🎵</div>
+<div class="note" style="left: 15%; animation-delay: 2s;">🎶</div>
+<div class="note" style="left: 80%; animation-delay: 1s;">🎵</div>
 <div class="note" style="left: 90%; animation-delay: 3s;">🎶</div>
+<div class="note" style="left: 50%; animation-delay: 4s;">🎵</div>
 </body>
 </html>
