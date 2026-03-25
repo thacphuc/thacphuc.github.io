@@ -89,24 +89,29 @@
 }
 
         /* 🎵 nốt nhạc */
-        .note {
+.note {
     position: fixed;
-    bottom: -20px; /* luôn xuất phát từ dưới */
-    font-size: 26px;
-    color: #7fc8f8;
+    top: -50px; /* Xuất phát từ trên cùng */
+    color: #7fc8f8; /* Màu xanh tone của bạn */
     pointer-events: none;
-    z-index: 5;
-    animation: floatUp 10s linear forwards;
+    z-index: 1; /* Để ẩn sau các thẻ .box cho tinh tế */
+    animation: floatDown linear forwards;
+    filter: drop-shadow(0 0 5px rgba(127, 200, 248, 0.5));
 }
 
-@keyframes floatUp {
-    from {
-        transform: translateY(100vh);
+@keyframes floatDown {
+    0% {
+        transform: translateY(0) rotate(0deg);
         opacity: 0;
     }
-    20% {opacity: 1;}
-    to {
-        transform: translateY(-10vh);
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
         opacity: 0;
     }
 }
@@ -211,20 +216,38 @@ document.addEventListener("click", function() {
     music.play();
 }, { once: true });
 
-/* 🎵 tạo nốt nhạc bay */
+/* 🎵 tạo nốt nhạc bay rơi random */
 function createNote() {
+    const notes = ["🎵", "🎶", "🎼", "♩", "♪"];
     const note = document.createElement("div");
     note.className = "note";
-    note.innerHTML = Math.random() > 0.5 ? "🎵" : "🎶";
+    note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
 
-    note.style.left = Math.random() * window.innerWidth + "px";
+    // Random vị trí ngang (0 - 100%)
+    const startPos = Math.random() * window.innerWidth;
+    note.style.left = startPos + "px";
+
+    // Random kích thước (từ 15px đến 35px)
+    const size = Math.random() * 20 + 15;
+    note.style.fontSize = size + "px";
+
+    // Random thời gian rơi (từ 5s đến 10s) để nốt nhanh nốt chậm
+    const duration = Math.random() * 5 + 5;
+    note.style.animationDuration = duration + "s";
+
+    // Thêm một chút độ mờ ngẫu nhiên
+    note.style.opacity = Math.random() * 0.5 + 0.3;
 
     document.body.appendChild(note);
 
-    setTimeout(() => note.remove(), 10000);
+    // Xóa nốt nhạc sau khi rơi xong để tránh nặng máy
+    setTimeout(() => {
+        note.remove();
+    }, duration * 1000);
 }
 
-setInterval(createNote, 600);
+// Tạo nốt nhạc thường xuyên hơn một chút
+setInterval(createNote, 400);
 </script>
 </body>
 </html>
