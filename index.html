@@ -117,7 +117,20 @@
         opacity: 0;
     }
 }
-
+@keyframes floatClick {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+        transform: translateY(-10px) rotate(10deg) scale(1.1);
+    }
+    100% {
+        transform: translateY(-100px) rotate(45deg) scale(1);
+        opacity: 0;
+    }
+}
         /* sparkle */
         .sparkle {
     position: fixed;
@@ -266,6 +279,12 @@ function createNote(xPos = null, yPos = null, isClick = false) {
 // --- 4. TẠO NỐT RƠI TỰ ĐỘNG (THƯA HƠN) ---
 // Tăng thời gian delay (ví dụ: 800ms thay vì 400ms)
 setInterval(() => createNote(null, null, false), 800);
+    /* 🖱️ Click chuột ở đâu hiện nốt nhạc ở đấy */
+document.addEventListener("click", function(e) {
+    // Gọi hàm createNote với tham số click là true
+    // Sử dụng clientX, clientY để lấy vị trí chuột
+    createNote(e.clientX, e.clientY, true);
+});
 </script>
 </body>
 </html>
