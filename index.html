@@ -2,9 +2,7 @@
 <html>
 <head>
     <title>Diem Portfolio</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -12,7 +10,7 @@
             text-align: center;
             padding: 40px;
             margin: 0;
-            cursor: none;
+            overflow-x: hidden; /* Tránh bị thanh cuộn ngang */
         }
 
         h1 { color: #4fa3d1; }
@@ -28,132 +26,83 @@
             transition: 0.3s;
             max-width: 700px;
             position: relative;
-            z-index: 10; /* luôn nổi trên đĩa */
+            z-index: 10;
         }
 
-        .box:hover {
-            transform: translateY(-8px);
-        }
+        .box:hover { transform: translateY(-8px); }
 
         .avatar {
-            width: 130px;
-            height: 130px;
+            width: 130px; height: 130px;
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid #d6ecf8;
         }
 
         .section-img {
-            width: 80%;
-            max-height: 180px;
-            object-fit: cover;
-            border-radius: 15px;
+            width: 80%; max-height: 180px;
+            object-fit: cover; border-radius: 15px;
             margin-bottom: 15px;
         }
 
-        /* skills pill */
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-
+        .skills { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
         .skill {
-            background: #a8d8f0;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            transition: 0.3s;
+            background: #a8d8f0; padding: 8px 15px;
+            border-radius: 20px; font-size: 14px; transition: 0.3s;
         }
-
-        .skill:hover {
-            background: #7fc8f8;
-            transform: scale(1.1);
-        }
-
-        /* 🎧 đĩa than BIG + dưới layer */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        .skill:hover { background: #7fc8f8; transform: scale(1.1); }
 
         .vinyl {
-    position: fixed;
-    bottom: -80px;
-    right: -80px;
-    width: 450px;
-    opacity: 0.4;
-    animation: spin 25s linear infinite;
-    z-index: 0;
-}
+            position: fixed; bottom: -80px; right: -80px;
+            width: 450px; opacity: 0.4;
+            animation: spin 25s linear infinite;
+            z-index: 0; pointer-events: none;
+        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 🎵 nốt nhạc */
-.note {
-    position: fixed;
-    top: -60px; /* Xuất phát cao hơn một chút vì nốt to hơn */
-    color: #7fc8f8; /* Màu xanh tone của bạn */
-    pointer-events: none;
-    z-index: 1; /* Để ẩn sau các thẻ .box cho tinh tế */
-    animation: floatDown linear forwards;
-    /* Giúp nốt nhạc sắc nét khi phóng to */
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-}
-
-@keyframes floatDown {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-    }
-}
-@keyframes floatClick {
-    0% {
-        transform: translateY(0) rotate(0deg) scale(0.5);
-        opacity: 0;
-    }
-    15% {
-        opacity: 1;
-        transform: translateY(-10px) rotate(10deg) scale(1.1);
-    }
-    100% {
-        transform: translateY(-100px) rotate(45deg) scale(1);
-        opacity: 0;
-    }
-}
-        /* sparkle */
-        .sparkle {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: #7fc8f8;
-    border-radius: 50%;
-    pointer-events: none;
-    animation: fade 1s linear forwards;
-    z-index: 9999; /* cao nhất luôn */
-}
-
-        @keyframes fade {
-            to {opacity: 0; transform: scale(2);}
+        /* 🎵 CSS cho nốt nhạc */
+        .note {
+            position: fixed;
+            color: #7fc8f8;
+            pointer-events: none;
+            z-index: 1;
+            text-rendering: optimizeLegibility;
         }
 
+        /* Hiệu ứng rơi tự động */
+        .fall-animation {
+            animation: floatDown linear forwards;
+        }
+
+        /* Hiệu ứng khi click */
+        .click-animation {
+            animation: floatClick 2s ease-out forwards;
+        }
+
+        @keyframes floatDown {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes floatClick {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translate(-50%, -80%) scale(1.2); }
+            100% { transform: translate(-50%, -200px) rotate(45deg) scale(1); opacity: 0; }
+        }
+
+        .sparkle {
+            position: fixed; width: 8px; height: 8px;
+            background: #7fc8f8; border-radius: 50%;
+            pointer-events: none; animation: fade 1s linear forwards;
+            z-index: 9999;
+        }
+        @keyframes fade { to {opacity: 0; transform: scale(2);} }
     </style>
 </head>
-
 <body>
 
 <img src="tải xuống (21).jpg" class="avatar">
-
 <h1>hi, i'm diem ✨</h1>
 <p>just a second-year student figuring things out… but in a cute way 🌷</p>
 
@@ -178,113 +127,58 @@
     </div>
 </div>
 
-<div class="box">
-    <img src="https://i.imgur.com/6Iej2c3.jpg" class="section-img">
-    <h2>experience</h2>
-    <p>Event Department – Art Club</p>
-    <p>Group research projects</p>
-    <p>Organizing student events</p>
-</div>
-
-<div class="box">
-    <img src="https://i.imgur.com/n8OYCzR.jpg" class="section-img">
-    <h2>interests</h2>
-    <p>Baking 🍰 (future bakery owner)</p>
-    <p>Music: PLAVE, Måneskin, Xdinary Heroes, MCR 🎸</p>
-    <p>Drawing & movies 🎬</p>
-</div>
-
-<div class="box">
-    <img src="https://i.imgur.com/JQ9Z1Zm.jpg" class="section-img">
-    <h2>contact</h2>
-    <p>Facebook: ...</p>
-    <p>Instagram: ...</p>
-</div>
-
-<!-- 🎧 NHẠC (QUAN TRỌNG: đổi tên file KHÔNG DẤU) -->
-<audio id="music" autoplay loop>
+<audio id="music" loop>
     <source src="https://files.catbox.moe/af2dx6.mp3" type="audio/mpeg">
 </audio>
-
-<!-- 💿 -->
 <img src="suki chan hai.jpg" class="vinyl">
 
 <script>
-document.addEventListener("mousemove", function(e) {
-    let sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
+    // 1. Sparkle khi di chuột
+    document.addEventListener("mousemove", function(e) {
+        let sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = e.clientX + "px";
+        sparkle.style.top = e.clientY + "px";
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    });
 
-    sparkle.style.left = e.clientX + "px";
-    sparkle.style.top = e.clientY + "px";
-
-    document.body.appendChild(sparkle);
-
-    setTimeout(() => sparkle.remove(), 1000);
-});
-</script>
-
-<!-- 🎵 NỐT NHẠC -->
-<script>
-/* 🎧 bật nhạc khi click */
-document.addEventListener("click", function() {
+    // 2. Nhạc và Click
+    const notesList = ["🎵", "🎶", "🎼", "♩", "♪", "♫", "♬"];
     const music = document.getElementById("music");
-    music.play();
-}, { once: true });
 
-/* list các ký tự nốt nhạc */
-const notesList = ["🎵", "🎶", "🎼", "♩", "♪", "♫", "♬"];
+    document.addEventListener("click", function(e) {
+        // Bật nhạc lần đầu click
+        music.play().catch(() => {}); 
+        
+        // Tạo nốt nhạc tại vị trí click
+        createNote(e.clientX, e.clientY, true);
+    });
 
-/* 🎵 hàm tạo nốt nhạc bay rơi random */
-function createNote(xPos = null, yPos = null, isClick = false) {
-    const note = document.createElement("div");
-    note.className = "note";
-    note.innerHTML = notesList[Math.floor(Math.random() * notesList.length)];
+    function createNote(x = null, y = null, isClick = false) {
+        const note = document.createElement("div");
+        note.className = "note " + (isClick ? "click-animation" : "fall-animation");
+        note.innerHTML = notesList[Math.floor(Math.random() * notesList.length)];
 
-    // --- 1. XỬ LÝ VỊ TRÍ ---
-    if (isClick && xPos !== null && yPos !== null) {
-        // Nếu là click, hiện ngay tại con chuột
-        note.style.left = xPos - (parseInt(note.style.fontSize) / 2) + "px"; // Căn giữa nốt
-        note.style.top = yPos - (parseInt(note.style.fontSize) / 2) + "px"; // Căn giữa nốt
-        // Reset animation vì nó không rơi từ top: -60px
-        note.style.animation = "none";
-        // Tạo animation riêng cho nốt được click (ví dụ: bay lên một chút rồi ẩn)
-        note.style.animation = "floatClick 2s ease-out forwards";
-    } else {
-        // Nếu tự động, rơi từ trên xuống
-        const startPos = Math.random() * window.innerWidth;
-        note.style.left = startPos + "px";
-        note.style.top = "-60px"; // Vị trí xuất phát mặc định
+        // Kích thước to hơn (30px - 60px)
+        const size = Math.random() * 30 + 30;
+        note.style.fontSize = size + "px";
+
+        if (isClick) {
+            note.style.left = x + "px";
+            note.style.top = y + "px";
+        } else {
+            note.style.left = Math.random() * 100 + "vw";
+            note.style.top = "-50px";
+            note.style.animationDuration = (Math.random() * 5 + 7) + "s"; // Rơi chậm (7-12s)
+        }
+
+        document.body.appendChild(note);
+        setTimeout(() => note.remove(), isClick ? 2000 : 12000);
     }
 
-    // --- 2. XỬ LÝ KÍCH THƯỚC (TO HƠN) ---
-    // Tăng kích thước ngẫu nhiên (từ 25px đến 55px)
-    const size = Math.random() * 30 + 25;
-    note.style.fontSize = size + "px";
-
-    // --- 3. XỬ LÝ THỜI GIAN & ĐỘ MỜ ---
-    // Random thời gian rơi (từ 6s đến 12s) để thưa hơn
-    const duration = Math.random() * 6 + 6;
-    if (!isClick) note.style.animationDuration = duration + "s";
-
-    note.style.opacity = Math.random() * 0.5 + 0.4; // Tăng độ mờ một chút cho rõ
-
-    document.body.appendChild(note);
-
-    // Xóa nốt nhạc sau khi rơi/bay xong
-    setTimeout(() => {
-        note.remove();
-    }, isClick ? 2000 : duration * 1000); // 2s cho nốt click, duration cho nốt rơi
-}
-
-// --- 4. TẠO NỐT RƠI TỰ ĐỘNG (THƯA HƠN) ---
-// Tăng thời gian delay (ví dụ: 800ms thay vì 400ms)
-setInterval(() => createNote(null, null, false), 800);
-    /* 🖱️ Click chuột ở đâu hiện nốt nhạc ở đấy */
-document.addEventListener("click", function(e) {
-    // Gọi hàm createNote với tham số click là true
-    // Sử dụng clientX, clientY để lấy vị trí chuột
-    createNote(e.clientX, e.clientY, true);
-});
+    // 3. Tự động rơi (mật độ thưa: mỗi 1.2 giây một nốt)
+    setInterval(() => createNote(), 1200);
 </script>
 </body>
 </html>
