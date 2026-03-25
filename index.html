@@ -216,11 +216,13 @@ document.addEventListener("mousemove", function(e) {
 
 <!-- 🎵 NỐT NHẠC -->
 <script>
+/* 🎧 bật nhạc khi click */
 document.addEventListener("click", function() {
     const music = document.getElementById("music");
     music.play();
 }, { once: true });
-    <script>
+
+/* 🎵 tạo nốt nhạc bay */
 function createNote() {
     const note = document.createElement("div");
     note.className = "note";
@@ -234,8 +236,8 @@ function createNote() {
     setTimeout(() => note.remove(), 12000);
 }
 
+/* spawn liên tục */
 setInterval(createNote, 800);
-</script>
 </script>
 </body>
 </html>
