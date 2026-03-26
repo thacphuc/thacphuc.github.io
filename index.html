@@ -153,21 +153,27 @@
         }
         @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
         /* 🎀 Hiệu ứng đung đưa cho góc trái */
+        /* 🎀 Muhmo trốn tìm góc trái - FIXED ló đầu & to hơn */
         #left-decor {
             position: fixed;
-            bottom: -20px;
-            left: -30px;
-            width: 300px; /* To nhỏ tùy bạn chỉnh */
+            bottom: -30px; /* Thấp xuống một chút để ló lên */
+            left: -80px; /* Lùi sâu về bên trái để giấu thân */
+            width: 400px; /* Tăng kích thước to hơn (bản cũ 300px) */
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.8; /* Tăng độ rõ */
             pointer-events: none;
-            transform-origin: bottom left;
-            animation: sway 4s ease-in-out infinite;
+            
+            /* --- CỐT LÕI ĐỂ LÓ ĐẦU --- */
+            transform-origin: top left;
+            
+            /* Animation ló đầu: đung đưa theo nhịp nhẹ */
+            animation: muhmoPeek 6s ease-in-out infinite;
         }
 
-        @keyframes sway {
+        /* ✨ Hiệu ứng Muhmo ló đầu ra nghiêng 30 độ */
+        @keyframes muhmoPeek {
             0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(5deg); }
+            50% { transform: rotate(20deg); } /* Ló đầu ra nghiêng nhẹ (bạn có thể chỉnh lên 30deg nếu thích) */
         }
     </style>
 </head>
