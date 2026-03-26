@@ -345,18 +345,18 @@
         
         // 2. Chờ một chút rồi cho mèo đi bộ sang phải
         setTimeout(() => {
-            cat.style.transition = "left 15s linear"; // Mèo đi thong thả trong 15 giây
+            cat.style.transition = "left s linear"; // Mèo đi thong thả trong 15 giây
             cat.style.left = (window.innerWidth + 150) + "px";
         }, 100);
 
         // 3. Thiết lập lần đi bộ tiếp theo (ngẫu nhiên từ 30s đến 60s)
-        const nextWalk = Math.random() * 30000 + 30000;
+        const nextWalk = Math.random() * 10000 + 0000;
         setTimeout(catWalk, nextWalk);
     }
 
     // Bắt đầu cho mèo đi bộ lần đầu tiên sau 10 giây load trang
     setTimeout(catWalk, 10000);
 </script>
-    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjFsdTdoNGI2bHlvaXJvYzUwcWtuNnVkNnBmZ3FmZjQ3cjhyaGxjaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9xarGMi45RQXEIirLB/giphy.gif" id="walking-cat">
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDdtb2tleXU5YTJlODRpaWYyeGZzeDZrMzk3bzF4eGcxZzFiNTZkZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wUn4hu91PeJdZY9O1e/giphy.gif" id="walking-cat">
 </body>
 </html>
