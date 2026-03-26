@@ -339,23 +339,22 @@
     function catWalk() {
         const cat = document.getElementById("walking-cat");
         
-        // 1. Đưa mèo về vị trí xuất phát bên trái
         cat.style.transition = "none";
         cat.style.left = "-150px";
         
-        // 2. Chờ một chút rồi cho mèo đi bộ sang phải
         setTimeout(() => {
-            cat.style.transition = "left s linear"; // Mèo đi thong thả trong 15 giây
+            // 25s để đi hết màn hình -> Rất thong thả
+            cat.style.transition = "left 25s linear"; 
             cat.style.left = (window.innerWidth + 150) + "px";
         }, 100);
 
-        // 3. Thiết lập lần đi bộ tiếp theo (ngẫu nhiên từ 30s đến 60s)
-        const nextWalk = Math.random() * 10000 + 0000;
+        // Xuất hiện lại sau 10-20 giây
+        const nextWalk = Math.random() * 10000 + 10000;
         setTimeout(catWalk, nextWalk);
     }
 
-    // Bắt đầu cho mèo đi bộ lần đầu tiên sau 10 giây load trang
-    setTimeout(catWalk, 10000);
+    // Lần đầu xuất hiện sau 3 giây load trang cho nóng
+    setTimeout(catWalk, 3000);
 </script>
     <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDdtb2tleXU5YTJlODRpaWYyeGZzeDZrMzk3bzF4eGcxZzFiNTZkZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wUn4hu91PeJdZY9O1e/giphy.gif" id="walking-cat">
 </body>
