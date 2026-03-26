@@ -154,23 +154,24 @@
         @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
         #left-decor {
     position: fixed;
-    bottom: -50px; /* Chỉnh độ cao thấp để không bị mất mặt */
-    left: -40px;   /* Đẩy sang phải một chút để lộ mặt ra nhiều hơn */
-    width: 350px;  /* To vừa phải để cân bằng với cái đĩa */
-    z-index: 0;
-    opacity: 0.9;
-    pointer-events: none;
-    
-    /* Chỉnh trục xoay ở góc dưới bên trái để em ấy "ngóc" đầu lên từ góc */
+    bottom: -60px; 
+    left: -50px;   
+    width: 350px;  
+    z-index: 100; /* Cho nổi lên trên cùng để dễ click */
+    opacity: 1;
+    cursor: pointer;
     transform-origin: bottom left;
-    
-    /* Animation ló đầu */
     animation: muhmoPeek 5s ease-in-out infinite;
+    transition: transform 0.2s; /* Để khi click có hiệu ứng giật nhẹ */
+}
+
+#left-decor:active {
+    transform: scale(1.1) rotate(10deg); /* Click vào thì em ấy hơi to ra tí */
 }
 
 @keyframes muhmoPeek {
-    0%, 100% { transform: rotate(-10deg) scale(1); }
-    50% { transform: rotate(15deg) scale(1.05); } /* Nghiêng đầu ra nhìn nè */
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(15deg); } 
 }
     </style>
 </head>
@@ -235,7 +236,13 @@
 </div>
 
 <audio id="music" loop><source src="https://files.catbox.moe/af2dx6.mp3" type="audio/mpeg"></audio>
+<audio id="muhmo-sound">
+    <source src="muhmo.mp3" type="audio/mpeg">
+</audio>
 
+<div id="left-decor" onclick="playMuhmo()">
+    <img src="muhmo.png" style="width: 100%; cursor: pointer; pointer-events: auto;"> 
+</div>
 <div id="vinyl-container">
     <img src="2f718a2322fcbc81b0297c11c0d6af09.png" class="vinyl-img">
 </div>
@@ -305,6 +312,20 @@
         }
     }
     setTimeout(typeWriter, 1000);
+    function playMuhmo() {
+    const sound = document.getElementById("muhmo-sound");
+    sound.currentTime = 0; // Reset âm thanh để click liên tục được
+    sound.play().catch(() => {
+        console.log("Diễm ơi, click vào màn hình một cái trước để trình duyệt cho phép phát tiếng nhé!");
+    });
+    
+    // Bonus: Hiệu ứng rung rinh khi kêu
+    const decor = document.getElementById("left-decor");
+    decor.style.filter = "brightness(1.2)";
+    setTimeout(() => {
+        decor.style.filter = "brightness(1)";
+    }, 200);
+}
 </script>
 </body>
 </html>
