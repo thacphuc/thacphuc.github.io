@@ -175,6 +175,16 @@
             border-radius: 50%; pointer-events: none; animation: fade 1s linear forwards; z-index: 9999;
         }
         @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
+        /* 🐱 Chú mèo đi bộ Easter Egg */
+        #walking-cat {
+            position: fixed;
+            bottom: 0;
+            left: -150px; /* Bắt đầu ngoài màn hình bên trái */
+            width: 100px; /* Kích thước mèo */
+            z-index: 1000; /* Đi trên tất cả mọi thứ */
+            pointer-events: none;
+            transition: left 10s linear; /* Thời gian mèo đi hết màn hình */
+        }
     </style>
 </head>
 <body>
@@ -326,6 +336,27 @@
             decor.style.filter = "brightness(1)";
         }, 200);
     }
+    function catWalk() {
+        const cat = document.getElementById("walking-cat");
+        
+        // 1. Đưa mèo về vị trí xuất phát bên trái
+        cat.style.transition = "none";
+        cat.style.left = "-150px";
+        
+        // 2. Chờ một chút rồi cho mèo đi bộ sang phải
+        setTimeout(() => {
+            cat.style.transition = "left 15s linear"; // Mèo đi thong thả trong 15 giây
+            cat.style.left = (window.innerWidth + 150) + "px";
+        }, 100);
+
+        // 3. Thiết lập lần đi bộ tiếp theo (ngẫu nhiên từ 30s đến 60s)
+        const nextWalk = Math.random() * 30000 + 30000;
+        setTimeout(catWalk, nextWalk);
+    }
+
+    // Bắt đầu cho mèo đi bộ lần đầu tiên sau 10 giây load trang
+    setTimeout(catWalk, 10000);
 </script>
+    <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjFsdTdoNGI2bHlvaXJvYzUwcWtuNnVkNnBmZ3FmZjQ3cjhyaGxjaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9xarGMi45RQXEIirLB/giphy.gif" id="walking-cat">
 </body>
 </html>
