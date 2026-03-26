@@ -5,8 +5,11 @@
     <title>Diem Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
     <style>
+        /* 1. Sửa Font: Thêm Quicksand để hết lỗi tiếng Việt */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Poppins:wght@300;500&display=swap');
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Quicksand', 'Poppins', sans-serif; /* Ưu tiên Quicksand để chuẩn tiếng Việt */
             background: linear-gradient(to bottom, #eef7fb, #d6ecf8);
             text-align: center;
             padding: 40px 20px; margin: 0;
@@ -14,21 +17,55 @@
             min-height: 100vh;
         }
 
-        h1 { color: #4fa3d1; text-shadow: 0 0 15px rgba(127, 200, 248, 0.5); }
-        h2 { color: #7fc8f8; }
+        h1 { 
+            color: #4fa3d1; 
+            text-shadow: 0 0 15px rgba(127, 200, 248, 0.5); 
+            font-weight: 600;
+        }
 
+        /* 2. Đề xuất cho các Khung (Box): Hiệu ứng Soft UI */
         .box {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.7); /* Trong suốt hơn tí */
+            backdrop-filter: blur(12px); /* Mờ ảo hơn */
             padding: 25px; margin: 25px auto;
             width: 90%; max-width: 700px;
-            border-radius: 20px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            transition: 0.4s;
+            border-radius: 25px; /* Bo góc tròn hơn cho cute */
+            
+            /* Viền pastel siêu mảnh */
+            border: 1.5px solid rgba(127, 200, 248, 0.3);
+            
+            box-shadow: 0 8px 20px rgba(127, 200, 248, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative; z-index: 10;
             box-sizing: border-box;
         }
-        .box:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(79, 163, 209, 0.2); }
+
+        .box h2 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .box:hover { 
+            transform: translateY(-10px) scale(1.02); /* Bay lên và to ra xíu */
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #7fc8f8;
+            box-shadow: 0 15px 35px rgba(79, 163, 209, 0.25);
+        }
+
+        /* Thêm hiệu ứng cho ảnh trong box */
+        .section-img {
+            width: 85%; 
+            max-height: 200px; 
+            object-fit: cover; 
+            border-radius: 20px; 
+            margin-bottom: 15px;
+            transition: 0.5s;
+        }
+        
+        .box:hover .section-img {
+            transform: scale(1.03); /* Ảnh cũng hơi to ra khi hover */
+        }
 
         /* Avatar Flip */
         .avatar-container {
