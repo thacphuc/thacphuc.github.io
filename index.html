@@ -70,7 +70,7 @@
             margin: 25px auto; 
             width: 90%; 
             max-width: 700px; 
-            height: 380px; /* Chiều cao cố định chống giật */
+            height: 380px; 
             position: relative;
             z-index: 10;
         }
@@ -99,7 +99,7 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.08);
             padding: 25px;
-            z-index: 2; /* Đảm bảo mặt trước nằm trên để nhận hover */
+            z-index: 2;
         }
 
         .contact-back {
@@ -147,32 +147,34 @@
             100% { transform: translate(-50%, -250px) rotate(120deg) scale(0.7); opacity: 0; }
         }
 
+        /* ✨ Muhmo Decor - CHỈ ĐỂ 1 CÁI ID NÀY THÔI NHÉ */
+        #muhmo-decor {
+            position: fixed;
+            bottom: -50px; 
+            left: -40px;   
+            width: 350px;  
+            z-index: 100; /* Nổi lên trên để click */
+            cursor: pointer;
+            transform-origin: bottom left;
+            animation: muhmoPeek 5s ease-in-out infinite;
+            transition: all 0.2s;
+            pointer-events: auto; /* Quan trọng để nhận click */
+        }
+        
+        #muhmo-decor:active {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        @keyframes muhmoPeek {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(15deg); } 
+        }
+
         .sparkle {
             position: fixed; width: 8px; height: 8px; background: #7fc8f8;
             border-radius: 50%; pointer-events: none; animation: fade 1s linear forwards; z-index: 9999;
         }
         @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
-        #left-decor {
-    position: fixed;
-    bottom: -60px; 
-    left: -50px;   
-    width: 350px;  
-    z-index: 100; /* Cho nổi lên trên cùng để dễ click */
-    opacity: 1;
-    cursor: pointer;
-    transform-origin: bottom left;
-    animation: muhmoPeek 5s ease-in-out infinite;
-    transition: transform 0.2s; /* Để khi click có hiệu ứng giật nhẹ */
-}
-
-#left-decor:active {
-    transform: scale(1.1) rotate(10deg); /* Click vào thì em ấy hơi to ra tí */
-}
-
-@keyframes muhmoPeek {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(15deg); } 
-}
     </style>
 </head>
 <body>
@@ -236,18 +238,17 @@
 </div>
 
 <audio id="music" loop><source src="https://files.catbox.moe/af2dx6.mp3" type="audio/mpeg"></audio>
+
 <audio id="muhmo-sound">
     <source src="https://files.catbox.moe/88uxj2.mp3" type="audio/mpeg">
 </audio>
 
-<div id="left-decor" onclick="playMuhmo()">
-    <img src="muhmo.png" style="width: 100%; cursor: pointer; pointer-events: auto;"> 
+<div id="muhmo-decor" onclick="playMuhmo()">
+    <img src="muhmo.png" style="width: 100%;"> 
 </div>
+
 <div id="vinyl-container">
     <img src="2f718a2322fcbc81b0297c11c0d6af09.png" class="vinyl-img">
-</div>
-    <div id="left-decor">
-    <img src="muhmo.png" style="width: 100%;"> 
 </div>
 
 <script>
@@ -312,20 +313,19 @@
         }
     }
     setTimeout(typeWriter, 1000);
+
+    // Hàm phát tiếng Muhmo
     function playMuhmo() {
-    const sound = document.getElementById("muhmo-sound");
-    sound.currentTime = 0; // Reset âm thanh để click liên tục được
-    sound.play().catch(() => {
-        console.log("Diễm ơi, click vào màn hình một cái trước để trình duyệt cho phép phát tiếng nhé!");
-    });
-    
-    // Bonus: Hiệu ứng rung rinh khi kêu
-    const decor = document.getElementById("left-decor");
-    decor.style.filter = "brightness(1.2)";
-    setTimeout(() => {
-        decor.style.filter = "brightness(1)";
-    }, 200);
-}
+        const sound = document.getElementById("muhmo-sound");
+        sound.currentTime = 0; 
+        sound.play().catch(() => {});
+        
+        const decor = document.getElementById("muhmo-decor");
+        decor.style.filter = "brightness(1.2)";
+        setTimeout(() => {
+            decor.style.filter = "brightness(1)";
+        }, 200);
+    }
 </script>
 </body>
 </html>
