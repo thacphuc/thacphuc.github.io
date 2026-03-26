@@ -152,29 +152,26 @@
             border-radius: 50%; pointer-events: none; animation: fade 1s linear forwards; z-index: 9999;
         }
         @keyframes fade { to {opacity: 0; transform: scale(2.5);} }
-        /* 🎀 Hiệu ứng đung đưa cho góc trái */
-        /* 🎀 Muhmo trốn tìm góc trái - FIXED ló đầu & to hơn */
         #left-decor {
-            position: fixed;
-            bottom: -30px; /* Thấp xuống một chút để ló lên */
-            left: -80px; /* Lùi sâu về bên trái để giấu thân */
-            width: 400px; /* Tăng kích thước to hơn (bản cũ 300px) */
-            z-index: 0;
-            opacity: 0.8; /* Tăng độ rõ */
-            pointer-events: none;
-            
-            /* --- CỐT LÕI ĐỂ LÓ ĐẦU --- */
-            transform-origin: top left;
-            
-            /* Animation ló đầu: đung đưa theo nhịp nhẹ */
-            animation: muhmoPeek 6s ease-in-out infinite;
-        }
+    position: fixed;
+    bottom: -50px; /* Chỉnh độ cao thấp để không bị mất mặt */
+    left: -40px;   /* Đẩy sang phải một chút để lộ mặt ra nhiều hơn */
+    width: 350px;  /* To vừa phải để cân bằng với cái đĩa */
+    z-index: 0;
+    opacity: 0.9;
+    pointer-events: none;
+    
+    /* Chỉnh trục xoay ở góc dưới bên trái để em ấy "ngóc" đầu lên từ góc */
+    transform-origin: bottom left;
+    
+    /* Animation ló đầu */
+    animation: muhmoPeek 5s ease-in-out infinite;
+}
 
-        /* ✨ Hiệu ứng Muhmo ló đầu ra nghiêng 30 độ */
-        @keyframes muhmoPeek {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(20deg); } /* Ló đầu ra nghiêng nhẹ (bạn có thể chỉnh lên 30deg nếu thích) */
-        }
+@keyframes muhmoPeek {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(15deg) scale(1.05); } /* Nghiêng đầu ra nhìn nè */
+}
     </style>
 </head>
 <body>
@@ -241,9 +238,9 @@
 
 <div id="vinyl-container">
     <img src="2f718a2322fcbc81b0297c11c0d6af09.png" class="vinyl-img">
+</div>
     <div id="left-decor">
     <img src="muhmo.png" style="width: 100%;"> 
-</div>
 </div>
 
 <script>
